@@ -1,0 +1,179 @@
+@import 'tailwindcss';
+@import 'tw-animate-css';
+
+@custom-variant dark (&:is(.dark *));
+
+:root {
+  /* ShelfLife Cozy Palette */
+  --background: #F4F0E8;
+  --foreground: #1F2937;
+  --card: #EFE3C8;
+  --card-foreground: #1F2937;
+  --popover: #EFE3C8;
+  --popover-foreground: #1F2937;
+  --primary: #F4BE7A;
+  --primary-foreground: #1F2937;
+  --secondary: #EFE3C8;
+  --secondary-foreground: #1F2937;
+  --muted: #E8E0D0;
+  --muted-foreground: #4B5563;
+  --accent: #F4BE7A;
+  --accent-foreground: #1F2937;
+  --destructive: #FF6B6B;
+  --destructive-foreground: #1F2937;
+  --success: #67D58C;
+  --success-foreground: #1F2937;
+  --warning: #FFD166;
+  --warning-foreground: #1F2937;
+  --border: #1F2937;
+  --input: #F4F0E8;
+  --ring: #F4BE7A;
+  --radius: 1rem;
+}
+
+@theme inline {
+  --font-sans: 'Nunito', 'Nunito Fallback', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback', monospace;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+  --color-warning: var(--warning);
+  --color-warning-foreground: var(--warning-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+/* Cozy Card Style - thick borders and offset shadows */
+.cozy-card {
+  @apply bg-card border-3 border-foreground rounded-2xl;
+  box-shadow: 6px 6px 0px #1F2937;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.cozy-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 8px 8px 0px #1F2937;
+}
+
+.cozy-card-static {
+  @apply bg-card border-3 border-foreground rounded-2xl;
+  box-shadow: 6px 6px 0px #1F2937;
+}
+
+/* Cozy Button Style */
+.cozy-btn {
+  @apply bg-primary text-foreground font-bold border-3 border-foreground rounded-xl px-6 py-3;
+  box-shadow: 4px 4px 0px #1F2937;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.cozy-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #1F2937;
+}
+
+.cozy-btn:active {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #1F2937;
+}
+
+.cozy-btn-secondary {
+  @apply bg-card text-foreground font-bold border-3 border-foreground rounded-xl px-6 py-3;
+  box-shadow: 4px 4px 0px #1F2937;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.cozy-btn-secondary:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #1F2937;
+}
+
+.cozy-btn-success {
+  @apply bg-success text-foreground font-bold border-3 border-foreground rounded-xl px-6 py-3;
+  box-shadow: 4px 4px 0px #1F2937;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.cozy-btn-success:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #1F2937;
+}
+
+.cozy-btn-danger {
+  @apply bg-destructive text-foreground font-bold border-3 border-foreground rounded-xl px-6 py-3;
+  box-shadow: 4px 4px 0px #1F2937;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.cozy-btn-danger:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 6px 6px 0px #1F2937;
+}
+
+/* Cozy Input Style */
+.cozy-input {
+  @apply bg-input border-3 border-foreground rounded-xl px-4 py-3 font-sans;
+  box-shadow: 4px 4px 0px #1F2937;
+}
+
+.cozy-input:focus {
+  @apply outline-none ring-2 ring-primary;
+}
+
+/* Status badges */
+.badge-fresh {
+  @apply bg-success text-foreground border-2 border-foreground px-3 py-1 rounded-full text-sm font-bold;
+}
+
+.badge-expiring {
+  @apply bg-warning text-foreground border-2 border-foreground px-3 py-1 rounded-full text-sm font-bold;
+}
+
+.badge-expired {
+  @apply bg-destructive text-foreground border-2 border-foreground px-3 py-1 rounded-full text-sm font-bold;
+}
+
+/* Filter chip style */
+.filter-chip {
+  @apply bg-card border-2 border-foreground rounded-full px-4 py-2 text-sm font-bold cursor-pointer;
+  box-shadow: 3px 3px 0px #1F2937;
+  transition: transform 0.1s ease, box-shadow 0.1s ease;
+}
+
+.filter-chip:hover {
+  transform: translate(-1px, -1px);
+  box-shadow: 4px 4px 0px #1F2937;
+}
+
+.filter-chip.active {
+  @apply bg-primary;
+}
