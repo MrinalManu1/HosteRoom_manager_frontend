@@ -3,11 +3,9 @@
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
-import { useAppSelector, useAppDispatch } from '@/store/hooks'
-import { addItem } from '@/features/inventorySlice'
-import { addActivity } from '@/features/notificationSlice'
-import { socketService } from '@/services/socket'
-import type { Category, InventoryItem } from '@/features/inventorySlice'
+import { useAppDispatch } from '@/store/hooks'
+import { createItem } from '@/features/inventorySlice'
+import type { Category } from '@/features/inventorySlice'
 
 const categories: { value: Exclude<Category, 'all'>; label: string; emoji: string }[] = [
   { value: 'produce', label: 'Produce', emoji: '🍎' },
@@ -54,7 +52,6 @@ function getEmojiForItem(name: string): string {
 export default function AddItemPage() {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const user = useAppSelector((state) => state.auth.user)
 
   const [itemName, setItemName] = useState('')
   const [category, setCategory] = useState<Exclude<Category, 'all'>>('produce')
@@ -62,39 +59,15 @@ export default function AddItemPage() {
   const [unit, setUnit] = useState('pcs')
   const [expiryDate, setExpiryDate] = useState('')
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
 
-    const emoji = getEmojiForItem(itemName)
-    const newItem: InventoryItem = {
-      id: Date.now().toString(),
+    await dispatch(createItem({
       name: itemName,
-      emoji,
       category,
       quantity: parseInt(quantity) || 1,
-      unit,
       expiryDate,
-      addedBy: user?.name || 'You',
-      addedById: user?.id || '1',
-      createdAt: new Date().toISOString(),
-    }
-
-    // Add to Redux store
-    dispatch(addItem(newItem))
-
-    // Add activity
-    dispatch(addActivity({
-      id: Date.now().toString(),
-      type: 'item_added',
-      message: `${user?.name || 'You'} added ${itemName}`,
-      emoji,
-      userName: user?.name || 'You',
-      itemName,
-      timestamp: new Date().toISOString(),
-    }))
-
-    // Emit to socket for realtime updates
-    socketService.emitItemAdded(newItem)
+    })).unwrap()
 
     // Navigate to inventory
     router.push('/inventory')
