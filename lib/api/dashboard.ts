@@ -1,12 +1,13 @@
 import { apiRequest } from '@/lib/api-client'
+import type { DashboardStats, ExpiringItem } from '@/features/dashboardSlice'
 
 export const dashboardApi = {
-  getStats() {
-    return apiRequest('/dashboard/stats')
+ getStats() {
+    return apiRequest<DashboardStats>('/dashboard/stats')
   },
 
   getExpiringItems() {
-    return apiRequest('/dashboard/expiring')
+    return apiRequest<{ items: ExpiringItem[] }>('/dashboard/expiring')
   },
 
   getAnalytics() {
